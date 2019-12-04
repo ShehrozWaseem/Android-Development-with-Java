@@ -1,0 +1,176 @@
+********************* mAIN aCTIVITY **********
+
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+public class MainActivity extends AppCompatActivity {
+ListView list;
+String food[]={"eat","tea","peach","berry"};
+String des[]={"abcd1bxcbzfbfzd","1234fbszdfdfx","5678zbzfdfdbz","98101fdzfdzbfzfd1"};
+int img[]={R.drawable.lab411,R.drawable.screenshot_3,R.drawable.screenshot_4,R.drawable.ic_launcher_background};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        list=findViewById(R.id.la);
+        //ArrayAdapter <String> arrayAdapter=new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,food);
+
+
+
+        custom_v custom=new custom_v(this,food,des,img);
+        list.setAdapter(custom);
+    }
+}
+
+
+*******CUSTOM**************
+package com.example.myapplication;
+
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+public class custom_v extends ArrayAdapter<String> {
+    private String food[];
+    private String des[];
+    private int img[];
+    Activity context;
+    private Object viewHolder;
+
+
+    public custom_v(Activity context, String food[], String des[], int img[]) {
+        super(context, R.layout.listview,food);
+        this.context=context;
+        this.food=food;
+        this.des=des;
+        this.img=img;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View r=convertView;
+         viewHolder viewhold=null;
+         if(r==null){
+             LayoutInflater layoutInflater=context.getLayoutInflater();
+             r=layoutInflater.inflate(R.layout.listview,null,true);
+             viewhold=new viewHolder(r);
+
+         }
+         else {
+             viewHolder = r.getTag();
+         }
+         viewhold.p1.setImageResource(img[position]);
+         viewhold.t1.setText(food[position]);
+         viewhold.t2.setText(des[position]);
+        return r;
+    }
+
+    class viewHolder{
+        TextView t1,t2;
+        ImageView p1;
+        viewHolder(View v){
+            t1=v.findViewById(R.id.textView);
+            t2=v.findViewById(R.id.textView2);
+            p1=v.findViewById(R.id.imageView);
+
+        }
+    }
+}
+
+*********xml******************
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff"
+        android:padding="15dp"
+
+        >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="164dp"
+            android:layout_marginRight="164dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="71dp"
+            android:layout_marginLeft="71dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="165dp"
+            android:layout_marginRight="165dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:layout_toRightOf="@+id/imageView"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="17dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+    </RelativeLayout>
+</LinearLayout>
+
+*********** ACTIVITY_MAIN*******************
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/la"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp" />
+</LinearLayout>
